@@ -22,6 +22,8 @@ import { StoreModule } from '@ngrx/store';
 import {rootReducer} from "./reducers";
 import {DummyRepository} from "./services/dummy.repository";
 import {ErrorComponent} from "./components/layout/error.component";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {ErrorComponent} from "./components/layout/error.component";
     FlexLayoutModule,
     FlexModule,
     HttpClientModule,
-    StoreModule.forRoot(rootReducer)
+    StoreModule.forRoot(rootReducer),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [HttpService, ApiService, DummyRepository],
   bootstrap: [AppComponent]
