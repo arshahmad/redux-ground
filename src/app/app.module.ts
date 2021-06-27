@@ -20,8 +20,8 @@ import {PostListComponent} from "./components/post-list.component";
 import {PostCardComponent} from "./components/post-card.component";
 import { StoreModule } from '@ngrx/store';
 import {rootReducer} from "./reducers";
-import {UsersService} from "./services/users.service";
-import {PostsService} from "./services/posts.service";
+import {DummyRepository} from "./services/dummy.repository";
+import {ErrorComponent} from "./components/layout/error.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import {PostsService} from "./services/posts.service";
     UserCardComponent,
     userListComponent,
     PostListComponent,
-    PostCardComponent
+    PostCardComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +47,7 @@ import {PostsService} from "./services/posts.service";
     HttpClientModule,
     StoreModule.forRoot(rootReducer)
   ],
-  providers: [HttpService, ApiService, UsersService, PostsService],
+  providers: [HttpService, ApiService, DummyRepository],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
