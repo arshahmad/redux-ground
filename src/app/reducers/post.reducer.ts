@@ -1,6 +1,6 @@
 import {PostModel} from "../models/post.model";
 import {Action} from "../actions";
-import {POST_LIST_FAILED, POST_LIST_REQUEST, POST_LIST_SUCCESS} from "../actions/post.action";
+import {POST_DELETE, POST_LIST_FAILED, POST_LIST_REQUEST, POST_LIST_SUCCESS} from "../actions/post.action";
 
 export interface PostReducerState {
   loading: boolean,
@@ -23,6 +23,10 @@ export function postReducer(state = initialState, action: Action ): PostReducerS
     }
     case POST_LIST_FAILED: {
       return {...state, error: true, loading: false}
+    }
+    case POST_DELETE: {
+      const posts = state.posts.filter(post => post.id !== action.payload.id)
+      return {...state, ...{posts}}
     }
     case POST_LIST_SUCCESS: {
       const updatedPosts = state.posts.concat(action.payload.posts);

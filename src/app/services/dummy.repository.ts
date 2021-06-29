@@ -11,10 +11,21 @@ import {
   RootReducerState
 } from "../reducers";
 import {combineLatest, Observable} from "rxjs";
-import {UserListFailedAction, UserListRequestAction, UserListSuccessAction} from "../actions/user.action";
+import {
+  UserAddAction,
+  UserDeleteAction,
+  UserListFailedAction,
+  UserListRequestAction,
+  UserListSuccessAction, UserUpdateAction
+} from "../actions/user.action";
 import {UserModel} from "../models/user.model";
 import {PostModel} from "../models/post.model";
-import {PostListFailedAction, PostListRequestAction, PostListSuccessAction} from "../actions/post.action";
+import {
+  PostDeleteAction,
+  PostListFailedAction,
+  PostListRequestAction,
+  PostListSuccessAction
+} from "../actions/post.action";
 import {take} from "rxjs/operators";
 
 @Injectable()
@@ -44,6 +55,21 @@ export class DummyRepository {
     return [loading$, usersList$, error$];
   }
 
+  deleteUser(id: number) {
+    //first we call actual delete api
+    this.store.dispatch(new UserDeleteAction({id: id}))
+  }
+
+  updateUser(user: UserModel) {
+    //first we call actual update api
+    this.store.dispatch(new UserUpdateAction({user: user}))
+  }
+
+  addUser(data: any) {
+    //first we call actual update api
+    this.store.dispatch(new UserAddAction({data: data}));
+  }
+
   getPostsList(force = false): [Observable<boolean>, Observable<PostModel[]>, Observable<boolean>] {
     const loading$ = this.store.select(getPostsLoading);
     const loaded$ = this.store.select(getPostsLoaded);
@@ -62,5 +88,9 @@ export class DummyRepository {
     });
 
     return [loading$, postList$, error$];
+  }
+
+  deletePost(id: number) {
+    this.store.dispatch(new PostDeleteAction({id: id}))
   }
 }

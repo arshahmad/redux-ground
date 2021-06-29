@@ -24,6 +24,9 @@ import {DummyRepository} from "./services/dummy.repository";
 import {ErrorComponent} from "./components/layout/error.component";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import {DummyUsersComponent} from "./containers/dummy-users.component";
+import {UpdateUserComponent} from "./components/update-user.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -37,12 +40,15 @@ import { environment } from '../environments/environment';
     userListComponent,
     PostListComponent,
     PostCardComponent,
-    ErrorComponent
+    ErrorComponent,
+    DummyUsersComponent,
+    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     FlexModule,

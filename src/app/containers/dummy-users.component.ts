@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {PostModel} from "../models/post.model";
+import {UserModel} from "../models/user.model";
 import {DummyRepository} from "../services/dummy.repository";
 import {takeWhile} from "rxjs/operators";
 
 @Component({
-  selector: "app-post",
+  selector: "app-dummy-users",
   template: `
     <div class="container">
       <div *ngIf="!isLoading && !error">
-    <app-posts-list [posts]="posts"></app-posts-list>
+        <app-user-list [Users]="users"></app-user-list>
       </div>
       <div class="spinner" *ngIf="isLoading">
         <mat-spinner></mat-spinner>
@@ -16,15 +16,15 @@ import {takeWhile} from "rxjs/operators";
       <div *ngIf="error && !isLoading" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
         <app-error (reload)="tryAgain()"></app-error>
       </div>
-    </div>
-  `,
+    </div>`,
   styles: [`
+
     .container {
       display: flex;
       flex-direction: row;
       justify-content: center;
     }
-    app-posts-list {
+    app-user-list {
       display: flex;
       flex-wrap: wrap;
     }
@@ -40,28 +40,30 @@ import {takeWhile} from "rxjs/operators";
   `]
 })
 
-export class PostComponent implements OnInit, OnDestroy {
+export class DummyUsersComponent implements OnInit, OnDestroy{
 
-  posts: PostModel[] = [];
+  users: UserModel[] = [];
   isLoading: boolean = false;
   error: boolean = false;
   isAlive = true;
 
-  constructor(private dummyRepository: DummyRepository) {
+  constructor(
+    private dummyRepository: DummyRepository
+  ) {
   }
 
   ngOnInit() {
-    this.fetchPosts();
+    this.fetchUsersList();
   }
 
   ngOnDestroy() {
     this.isAlive = false;
   }
 
-  fetchPosts() {
-    const observer$ = this.dummyRepository.getPostsList();
+  fetchUsersList() {
+    const observer$ = this.dummyRepository.getUsersList();
     const loading$ = observer$[0];
-    const postData$ = observer$[1];
+    const userData$ = observer$[1];
     const error$ = observer$[2];
     loading$.pipe(takeWhile(() => this.isAlive)).subscribe(data => {
       this.isLoading = data;
@@ -69,12 +71,12 @@ export class PostComponent implements OnInit, OnDestroy {
     error$.pipe(takeWhile(() => this.isAlive)).subscribe(data => {
       this.error = data;
     })
-    postData$.pipe(takeWhile(() => this.isAlive)).subscribe(data => {
-      this.posts = data;
-    });
+    userData$.pipe(takeWhile(() => this.isAlive)).subscribe(data => {
+      this.users = data;
+    })
   }
 
   tryAgain() {
-    this.dummyRepository.getPostsList(true);
+    this.dummyRepository.getUsersList(true);
   }
 }

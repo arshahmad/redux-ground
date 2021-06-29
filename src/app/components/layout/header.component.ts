@@ -7,6 +7,7 @@ import {Component} from "@angular/core";
       <div fxLayoutAlign="start center" fxFlex="100%" fxHide.xs>
         <button mat-button routerLink="" [routerLinkActiveOptions]="{exact : true}" routerLinkActive="selected">Users</button>
         <button mat-button routerLink="/post" routerLinkActive="selected">Post</button>
+        <button mat-button routerLink="/dummy-users" routerLinkActive="selected">Dummy Users</button>
       </div>
     </mat-toolbar>
   `,
