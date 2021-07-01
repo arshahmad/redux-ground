@@ -3,7 +3,7 @@ import {ApiService} from "./api.service";
 import {Store} from "@ngrx/store";
 import {
   getPosts, getPostsError, getPostsLoaded,
-  getPostsLoading,
+  getPostsLoading, getUserById,
   getUsers,
   getUsersError,
   getUsersLoaded,
@@ -68,6 +68,21 @@ export class DummyRepository {
   addUser(data: any) {
     //first we call actual update api
     this.store.dispatch(new UserAddAction({data: data}));
+  }
+
+  getUserById(id: number, force=false) {
+    console.log("store", this.store.select(state => console.log("state", state)));
+    const user$ = this.store.select(state => getUserById(state, id));
+    user$.pipe(take(1)).subscribe(data => {
+      if (!data || force) {
+        return this.apiServie.getUserById(id).subscribe(res => {
+          this.store.dispatch(new UserAddAction({data: res}))
+        })
+      }
+      return data;
+    });
+
+    return user$;
   }
 
   getPostsList(force = false): [Observable<boolean>, Observable<PostModel[]>, Observable<boolean>] {

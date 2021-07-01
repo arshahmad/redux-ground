@@ -16,6 +16,10 @@ export class ApiService {
       .pipe(map(data => data as UserModel[]))
   }
 
+  getUserById(id: number): Observable<UserModel> {
+    return this.httpService.get('/users/' + id);
+  }
+
   getAllPosts(): Observable<PostModel[]> {
     return this.httpService.get('/posts')
       .pipe(map(data => data as PostModel[]));

@@ -27,6 +27,7 @@ import { environment } from '../environments/environment';
 import {DummyUsersComponent} from "./containers/dummy-users.component";
 import {UpdateUserComponent} from "./components/update-user.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ViewUserComponent} from "./containers/view-user.component";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     ErrorComponent,
     DummyUsersComponent,
     UpdateUserComponent,
+    ViewUserComponent
   ],
   imports: [
     BrowserModule,

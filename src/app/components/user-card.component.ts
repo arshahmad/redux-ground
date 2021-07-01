@@ -3,11 +3,12 @@ import {UserModel} from "../models/user.model";
 import {DummyRepository} from "../services/dummy.repository";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateUserComponent} from "./update-user.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "app-user-card",
   template: `
-    <mat-card>
+    <mat-card (click)="viewUser(user.id)">
       <mat-card-title>{{user.name}}</mat-card-title>
       <h4>{{user.email}}</h4>
 <!--      <h4>{{user.website}}</h4>-->
@@ -33,7 +34,8 @@ export class UserCardComponent {
   // @ts-ignore
   @Input() user: UserModel;
 constructor(private dummyRepository: DummyRepository,
-            private dialog: MatDialog) {
+            private dialog: MatDialog,
+            private router: Router) {
 }
 
 deleteUser(id: number) {
@@ -50,6 +52,10 @@ editUser() {
   //   console.log('The dialog was closed');
   //   this.user = result;
   // });
+}
+
+viewUser(userId: number) {
+  this.router.navigate(['user', userId]);
 }
 
 }

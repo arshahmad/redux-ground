@@ -18,7 +18,13 @@ export const getPostsState = (state: RootReducerState) => state.posts;
 export const getUsersLoading = createSelector(getUserState, fromUser.getUsersLoading);
 export const getUsersLoaded = createSelector(getUserState, fromUser.getUsersLoaded);
 export const getUsers = createSelector(getUserState, fromUser.getUsers);
+export const getUserEntities = createSelector(getUserState, fromUser.getEntities);
 export const getUsersError = createSelector(getUserState, fromUser.getUsersError);
+
+export const getUserById = (state: RootReducerState, id: number) => {
+  const entities = getUserEntities(state);
+  return entities[id];
+}
 
 
 
