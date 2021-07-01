@@ -10,11 +10,11 @@ import {DummyRepository} from "../services/dummy.repository";
   <form [formGroup]="form" class="input-form" (ngSubmit)="form.valid && updateOrAddUser()">
     <mat-icon color="warn" (click)="onNoClick()">close</mat-icon>
     <mat-form-field>
-      <input formControlName="email" matInput placeholder="Email"/>
+      <input [formControl]="controls.email" matInput placeholder="Email"/>
       <mat-error>Valid email is required</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input formControlName="name" matInput placeholder="UserName"/>
+      <input [formControl]="controls.name" matInput placeholder="UserName"/>
       <mat-error>Name is required</mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">{{this.data ? 'Update' : 'Add'}}</button>
